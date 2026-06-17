@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RepoLens — GitHub Repository Health Analyzer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-name">RepoLens</div>
+      <div class="brand-sub">GitHub repo health analyzer</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Groq API Key</div>
+      <input type="password" id="groqKey" placeholder="gsk_..." autocomplete="off" />
+      <div class="sidebar-hint">Required · generates the AI health report</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">
+        GitHub Token
+        <span class="optional-badge">optional</span>
+      </div>
+      <input type="password" id="githubToken" placeholder="ghp_..." autocomplete="off" />
+      <div class="sidebar-hint">Raises rate limit from 60 → 5,000 req/hr</div>
+    </div>
+
+    <button class="btn-save" onclick="saveKeys()">Save Keys</button>
+    <div class="keys-status" id="keysStatus">Keys not saved</div>
+
+    <div class="sidebar-footer">
+      Groq · LLaMA 3.3 70B<br />
+      GitHub REST API · client-side only<br />
+      <a href="https://github.com/NS-Cehelsky" target="_blank">github.com/NS-Cehelsky</a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="main-inner">
+
+      <div class="page-header">
+        <h1 class="page-title">Analyze a Repository</h1>
+        <p class="page-desc">Enter a GitHub URL or <code>owner/repo</code> slug — RepoLens fetches the data and generates an AI health report.</p>
+      </div>
+
+      <!-- Repo input card -->
+      <div class="input-card">
+        <label class="input-label" for="repoInput">Repository</label>
+        <div class="input-row">
+          <input
+            type="text"
+            id="repoInput"
+            class="repo-input"
+            placeholder="https://github.com/owner/repo   or   owner/repo"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button class="btn-analyze" id="analyzeBtn" onclick="analyzeRepo()">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="6.5" cy="6.5" r="4"/>
+              <path d="M10 10L14 14" stroke-linecap="round"/>
+            </svg>
+            Analyze
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading bar (hidden by default) -->
+      <div class="loading-track" id="loadingTrack">
+        <div class="loading-fill"></div>
+      </div>
+
+      <!-- Error box (hidden by default) -->
+      <div class="error-box" id="errorBox"></div>
+
+      <!-- Placeholder state -->
+      <div class="placeholder-state" id="placeholderState">
+        <div class="placeholder-icon">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2">
+            <rect x="8" y="6" width="32" height="36" rx="4"/>
+            <path d="M16 16h16M16 22h12M16 28h10" stroke-linecap="round"/>
+            <circle cx="36" cy="38" r="8" fill="var(--bg)" stroke-width="1.5"/>
+            <path d="M33 38h6M36 35v6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p class="placeholder-text">Enter a repo to analyze</p>
+        <p class="placeholder-sub">RepoLens will check activity, documentation, CI/CD, issue health, and more — then generate an AI-written health report with an overall grade.</p>
+      </div>
+
+      <!-- Results area (hidden, populated by script in later steps) -->
+      <div class="results" id="results"></div>
+
+    </div>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
