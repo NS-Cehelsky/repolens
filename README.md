@@ -2,7 +2,7 @@
 
 Paste a GitHub repo URL and get an instant health report — calculated metrics plus an AI-written narrative, all client-side.
 
-**Live demo:** [coming soon]
+**Live demo:** (https://ns-cehelsky.github.io/repolens/)
 
 ---
 
